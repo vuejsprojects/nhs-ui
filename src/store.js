@@ -8,12 +8,16 @@ export default new Vuex.Store({
     options: ["Name", "Price", "Category", "Code", "Period",
     "Quantity", "Unit"],
     optionsChecked: [],
-    someOption: 'option 3'
   },
   mutations: {
     updateStoredOption(state, val) {
-      state.optionsChecked = val;
-      state.someOption = val
+      var pos = state.optionsChecked.indexOf(val)
+      if(pos === -1) {
+        state.optionsChecked.push(val)
+      }
+      else {
+        state.optionsChecked.splice(pos, 1)
+      }
     }
   },
   getters: {},

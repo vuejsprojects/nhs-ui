@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <p>{{msg}}</p>
-    <div>OMG {{$store.state.someOption}}</div>
     <option-search></option-search>
   </div>
 </template>
