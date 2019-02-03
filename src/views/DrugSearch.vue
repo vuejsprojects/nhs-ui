@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="NHS logo" src="../assets/nhs_logo.gif" />
-    <NhsSearch msg="Welcome to NHS Drug Tarif Search Page" />
+    <nhs-search msg="Welcome to NHS Drug Tarif Search Page" />
   </div>
 </template>
 
