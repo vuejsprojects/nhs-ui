@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Select the options you want to search on</h2>
+    <h3>Select the options you want to search on</h3>
     <div v-for="opt in $store.state.options"
       v-bind:key="opt.id">
       <search-on v-bind:optname="opt" v-bind:oid="opt"></search-on>
