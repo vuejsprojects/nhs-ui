@@ -37,3 +37,29 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### PJMD added to DEBUG in VSCode
+```
+npm run inspect
+``` 
+(though not sure VUE_CLI_BABEL_TRANSPILE_MODULES=true  and VUE_CLI_BABEL_TARGET_NODE=node are necessary)
+Which is in package.json:
+  "scripts": {
+...
+    "inspect": "VUE_CLI_BABEL_TRANSPILE_MODULES=true VUE_CLI_BABEL_TARGET_NODE=node  node --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand"
+  }
+
+Added as well a launch.json configuration nhs-ui/.vscode
+        {
+            "name": "Debug Jest Tests",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+              "--inspect-brk",
+              "${workspaceRoot}/node_modules/.bin/jest",
+              "--runInBand"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "port": 9229
+        }
