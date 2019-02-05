@@ -16,20 +16,13 @@ export default {
   },
   data: function() {
     return {
-      dummy: "option 1",
-      count: 0
     };
   },
   computed: {
-    optionsChecked: function() {
-      return this.$store.state.someOption;
-    }
   },
   methods: {
     updateStoredOption(e) {
-      //this.dummy = e.target.value;
       this.$store.commit("updateStoredOption", e.target.value);
-      console.log('>' + e.target.value + '<')
     }
   },
   components: {}
