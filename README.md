@@ -69,7 +69,7 @@ Added as well a launch.json configuration nhs-ui/.vscode
 
 I added to:
 ```
-launcg.config:
+launch.config:
 ```
 I think 1. made the difference
 1.            "env": {
@@ -84,3 +84,6 @@ I think 1. made the difference
 jest.config.js:
 ```
 1. cache: false
+
+**To be able to debug only one file at a time**
+I added to *launch.json* configuration: "program": "${file}"
