@@ -63,3 +63,24 @@ Added as well a launch.json configuration nhs-ui/.vscode
             "internalConsoleOptions": "neverOpen",
             "port": 9229
         }
+
+**In order to fix the issue:**
+({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import "core-js/modules/es6.array.iterator" SyntaxError: Unexpected string
+
+I added to:
+```
+launcg.config:
+```
+I think 1. made the difference
+1.            "env": {
+                "VUE_CLI_BABEL_TARGET_NODE": "true",
+                "VUE_CLI_BABEL_TRANSPILE_MODULES": "true"
+            },
+
+2.          "runtimeArgs": [
+              "--no-cache"
+            ],
+```
+jest.config.js:
+```
+1. cache: false
