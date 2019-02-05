@@ -1,10 +1,10 @@
 <template>
   <div>
-    <input type="checkbox" id="oid" 
+    <input type="checkbox" :id="oid" 
         v-bind:value="optname"
         v-on:input="updateStoredOption"
     />
-    <label for="oid">{{optname}}</label>
+    <label :for="oid">{{optname}}</label>
   </div>
 </template>
 <script>
