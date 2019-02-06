@@ -87,3 +87,8 @@ jest.config.js:
 
 **To be able to debug only one file at a time**
 I added to *launch.json* configuration: "program": "${file}"
+
+**Testing a Vuex store**
+1. Because it's a bit convoluted, it's better to separate actions, mutations from the store so they can be tested separately. The probleme is that the state must be injected (see mutations.spec.js and sore.spec.js)
+2. Export the store a simple object not a Vuex object otherwise problems will be looming.
+3. In main.js, use(Vuex) and in the Vue instance pass it a new Vuex(store plain object)

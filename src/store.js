@@ -1,25 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import mutations from "@/mutations"
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default {
   state: {
     options: ["Name", "Price", "Category", "Code", "Period",
     "Quantity", "Unit"],
-    optionsChecked: [],
+    optionsChecked: []
   },
-  mutations: {
-    updateStoredOption(state, val) {
-      var pos = state.optionsChecked.indexOf(val)
-      if(pos === -1) {
-        state.optionsChecked.push(val)
-      }
-      else {
-        state.optionsChecked.splice(pos, 1)
-      }
-    }
-  },
+  mutations,
   getters: {},
   actions: {}
-});
+};
