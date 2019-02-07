@@ -7,8 +7,19 @@ Vue.use(Vuex);
 export default {
   state: {
     options: ["Name", "Price", "Category", "Code", "Period",
-    "Quantity", "Unit"],
-    optionsChecked: []
+      "Quantity", "Unit"],
+    optionsChecked: [],
+    fieldValues:
+    {
+      "name": "",
+      "price": "",
+      "category": "",
+      "code": "",
+      "feriod": "",
+      "quantity": "",
+      "unit": ""
+    },
+    stuff: ""
   },
   mutations,
   getters: {},

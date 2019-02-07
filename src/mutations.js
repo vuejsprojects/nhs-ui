@@ -7,5 +7,12 @@ export default {
         else {
             state.optionsChecked.splice(pos, 1)
         }
+    },
+    setFieldValue (state, e) {
+        const key = e.target.id
+        const val = e.target.value
+        console.log('id=' + key +' vlaue: ' + val);
+        state.fieldValues[key] = val;
+        console.log(state.fieldValues)
     }
 }
