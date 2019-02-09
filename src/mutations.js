@@ -8,11 +8,12 @@ export default {
             state.optionsChecked.splice(pos, 1)
         }
     },
-    setFieldValue (state, e) {
-        const key = e.target.id
-        const val = e.target.value
-        console.log('id=' + key +' vlaue: ' + val);
-        state.fieldValues[key] = val;
-        console.log(state.fieldValues)
+    setFieldValue (state, payload) {
+        console.log('payload: ' + payload);
+        state.fieldValues[payload.key] = payload.value;
+        for(let k in state.fieldValues) {
+            console.log('field values:' + k + ": " + 
+            state.fieldValues[k])
+        };
     }
 }

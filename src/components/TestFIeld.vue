@@ -21,15 +21,17 @@ export default {
   },
   computed: {
     fieldvalue() {
-      const a=1
-//      return this.$store.state.stuff
       return this.$store.state.fieldValues[this.optname]
     }
   },
   methods: {
     setFieldValue(e) {
-      console.log('setFieldValue: '+e.target.id+ " - " +e.target.value)
-      this.$store.commit("setFieldValue", e);
+      console.log("event: "+ e.target.id + " - " + e.target.value);
+      const payload ={
+        key: e.target.id,
+        value: e.target.value
+      }
+      this.$store.commit("setFieldValue", payload);
     }
   },
   components: {}

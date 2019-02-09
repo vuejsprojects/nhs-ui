@@ -1,17 +1,11 @@
 <template>
   <div>
-    <h3>Select the options you want to search on</h3>
-    <div v-for="opt in $store.state.options"
-      v-bind:key="opt.id">
-      <search-on v-bind:optname="opt" v-bind:oid="opt"></search-on>
-    </div>
-    <!--
-    <div v-for="opt in $store.state.options"
-      v-bind:key="opt.id">
-      <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
-    </div>
-    -->
-    <div v-for="opt in $store.state.options"
+    <h3>Enter some free text for a wild search</h3>
+    <TestFIeld v-bind:optname="$store.getters.freeSearchName" 
+              v-bind:oid="$store.getters.freeSearchName">
+    </TestFIeld>
+    <h3>Or enter a search criteria in the fields you are intersted in</h3>
+    <div v-for="opt in $store.getters.fieldNames"
       v-bind:key="opt.id">
       <TestFIeld v-bind:optname="opt" v-bind:oid="opt"></TestFIeld>
     </div>

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import mutations from "@/mutations"
+import {free_search} from "@/store_config"
 
 Vue.use(Vuex);
 
@@ -12,16 +13,33 @@ export default {
     fieldValues:
     {
       "name": "",
-      "price": "",
+      "price": "2345",
       "category": "",
       "code": "",
-      "feriod": "",
+      "period": "",
       "quantity": "",
-      "unit": ""
+      "unit": "",
+      [free_search]: "free"
     },
-    stuff: ""
+    freeSearch: {
+      name: "free_search",
+      value: " "
+    }
   },
   mutations,
-  getters: {},
+  getters: {
+    fieldNames: state => {
+      console.log('free_search: ' + free_search);
+      const names = [];
+      for(let k in state.fieldValues) {
+        names.push(k)
+      }
+      // removing free search
+      const filtered = names.filter(n => n !== free_search);
+      console.log("filtered field values:" + filtered);
+      return filtered;
+    },
+    freeSearchName: state => free_search
+  },
   actions: {}
 };
