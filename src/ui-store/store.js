@@ -10,13 +10,13 @@ export default {
     fieldValues:
     {
       "name": "",
-      "price": "2345",
+      "price": "",
       "category": "",
       "code": "",
       "period": "",
       "quantity": "",
       "unit": "",
-      [free_search]: "free"
+      [free_search]: ""
     }
   },
   mutations,

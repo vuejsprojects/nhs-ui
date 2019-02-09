@@ -1,25 +1,26 @@
 import mutations from '@/ui-store/mutations'
+import {free_search} from '@/ui-store/store_config'
 
-
-test("optionsChecked is ['option1']", () => {
+test('should be abale to set a field value', () => {
     const state = {
-        options: ["Name", "Price", "Category", "Code", "Period",
-            "Quantity", "Unit"],
-        optionsChecked: []
+        fieldValues:
+        {
+            "name": "",
+            "price": "",
+            "category": "",
+            "code": "",
+            "period": "",
+            "quantity": "",
+            "unit": "",
+            [free_search]: ""
+        }
     }
-    const option_checked = 'option1'
-    mutations.updateStoredOption(state, option_checked);
-    expect(state.optionsChecked).toEqual([option_checked])
-})
-
-test('optionsChecked should be empty', () => {
-    const state = {
-        options: ["Name", "Price", "Category", "Code", "Period",
-            "Quantity", "Unit"],
-        optionsChecked: []
+    const fieldname = 'price';
+    const fieldvalue = 1234;
+    const payload = {
+        key: fieldname,
+        value: fieldvalue
     }
-    const option_checked = 'option1'
-    mutations.updateStoredOption(state, option_checked);
-    mutations.updateStoredOption(state, option_checked);
-    expect(state.optionsChecked).toHaveLength(0)
+    mutations.setFieldValue(state, payload);
+    expect(state.fieldValues[fieldname]).toEqual(fieldvalue)
 })

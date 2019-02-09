@@ -1,6 +1,6 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import store from '@/store'
+import store from '@/ui-store/store'
 import { cloneDeep } from 'lodash'
 import {free_search} from "@/ui-store/store_config"
 
@@ -23,21 +23,27 @@ describe("SearchOn.vue", () => {
         the_store = new Vuex.Store(cloneDeep(store))
     });
 
-    test("Field names array doesn't conatinf free search", () = > {
-        
+    test("Field names array doesn't conatinf free search", () => {
+        expect(the_store.getters.fieldNames).not.toContain(free_search);
     })
-    test("optionsChecked is ['option1']", () => {
-        const option_checked = 'option1'
-        the_store.commit('updateStoredOption', option_checked)
-        expect(the_store.state.optionsChecked).toEqual([option_checked])
+    test("user entered 1234 in field price, price:1234 should be in fieldValues", () => {
+        const fieldname = 'price';
+        const fieldvalue = 1234;
+        const payload = {
+            key: fieldname,
+            value: fieldvalue
+        }
+        the_store.commit('setFieldValue', payload)
+        expect(the_store.state.fieldValues[fieldname]).toEqual(fieldvalue)
     })
 
-    test('optionsChecked should be empty', () => {
-        expect(the_store.state.optionsChecked).toHaveLength(0)
+    test('getters.freeSearchName = free_search', () => {
+        expect(the_store.getters.freeSearchName).toEqual(free_search)
     })
 
     test('Tne number of field names shoule the same as the number of field valued', () => {
-        expect(the_store.getters.fieldNames).toHaveLength(7);
+        expect(the_store.getters.fieldNames).toHaveLength(
+            Object.keys(the_store.state.fieldValues).length - 1);
         expect(the_store.getters.fieldNames).toContain('price');
     })
 })
