@@ -1,7 +1,7 @@
 <template>
   <div>
-    <label  :for="oid">{{optname}}</label>
-    <input type="text" :id="oid" 
+    <label class="lfield" :for="oid">{{optname}}</label>
+    <input class="ifield" type="text" :id="oid" 
         placeholder="Enter the search criteria"
         v-bind:value="fieldvalue"
         v-on:input="setFieldValue"
@@ -20,14 +20,18 @@ export default {
     };
   },
   computed: {
-    fieldvalue: function() {
-      const a=1
-      return store.state.fieldValues[optname]
+    fieldvalue() {
+      return this.$store.state.fieldValues[this.optname]
     }
   },
   methods: {
     setFieldValue(e) {
-      this.$store.commit("setFieldValue", e.target.value,"");
+      console.log("event: "+ e.target.id + " - " + e.target.value);
+      const payload ={
+        key: e.target.id,
+        value: e.target.value
+      }
+      this.$store.commit("setFieldValue", payload);
     }
   },
   components: {}

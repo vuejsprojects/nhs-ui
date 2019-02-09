@@ -2,6 +2,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import store from '@/store'
 import { cloneDeep } from 'lodash'
+import {free_search} from "@/ui-store/store_config"
 
 
 // https://vue-test-utils.vuejs.org/guides/using-with-vuex.html
@@ -21,6 +22,10 @@ describe("SearchOn.vue", () => {
         // For it to work the store must be a simple onbject not a Vuex
         the_store = new Vuex.Store(cloneDeep(store))
     });
+
+    test("Field names array doesn't conatinf free search", () = > {
+        
+    })
     test("optionsChecked is ['option1']", () => {
         const option_checked = 'option1'
         the_store.commit('updateStoredOption', option_checked)

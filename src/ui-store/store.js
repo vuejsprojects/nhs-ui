@@ -1,15 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import mutations from "@/mutations"
-import {free_search} from "@/store_config"
+import mutations from "@/ui-store/mutations"
+import {free_search} from "@/ui-store/store_config"
 
 Vue.use(Vuex);
 
 export default {
   state: {
-    options: ["Name", "Price", "Category", "Code", "Period",
-      "Quantity", "Unit"],
-    optionsChecked: [],
     fieldValues:
     {
       "name": "",
@@ -20,10 +17,6 @@ export default {
       "quantity": "",
       "unit": "",
       [free_search]: "free"
-    },
-    freeSearch: {
-      name: "free_search",
-      value: " "
     }
   },
   mutations,

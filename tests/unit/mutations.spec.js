@@ -1,4 +1,4 @@
-import mutations from '@/mutations'
+import mutations from '@/ui-store/mutations'
 
 
 test("optionsChecked is ['option1']", () => {
