@@ -1,0 +1,116 @@
+<template>
+  <div>
+    <b-navbar toggleable="md" type="dark" variant="info">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form>
+
+          <b-nav-item-dropdown text="Lang" right>
+            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown right>
+            <!-- Using button-content slot -->
+            <template slot="button-content">
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Signout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <b-container>
+      <b-row align-h="center" class="mt-5">
+        <b-col cols="5">
+          <b-card class="text-center">
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+              <b-form-group
+                id="exampleInputGroup1"
+                label="Email address:"
+                label-for="exampleInput1"
+              >
+                <b-form-input
+                  id="exampleInput1"
+                  type="email"
+                  v-model="form.email"
+                  required
+                  placeholder="Enter email"
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group id="exampleInputGroup2" label="Your Password:" label-for="exampleInput2">
+                <b-form-input
+                  id="exampleInput2"
+                  type="password"
+                  v-model="form.password"
+                  required
+                  placeholder="Enter password"
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group id="exampleGroup4">
+                <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
+                  <b-form-checkbox value="me">Remember me</b-form-checkbox>
+                </b-form-checkbox-group>
+              </b-form-group>
+              <b-button type="submit" variant="primary">Submit</b-button>
+              <b-button type="reset" variant="danger">Reset</b-button>
+            </b-form>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+        checked: []
+      },
+      show: true
+    };
+  },
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      /* Reset our form values */
+      this.form.email = "";
+      this.form.name = "";
+      this.form.food = null;
+      this.form.checked = [];
+      /* Trick to reset/clear native browser form validation state */
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    }
+  }
+};
+</script>
+
+<style>
+</style>
