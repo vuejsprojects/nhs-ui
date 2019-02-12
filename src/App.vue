@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div class="logo mt-3 mr-3">
+    <img alt="Vue logo" src="@/assets/nhs_logo.gif" />
+    </div>
     <div id="nav">
       <router-link to="/">Login</router-link> |
       <router-link to="/about">About</router-link> |
@@ -17,6 +20,9 @@
   text-align: center;
   color: #2c3e50;
 }
+#app img {
+  height: 75px;
+}
 #nav {
   padding: 30px;
 }
@@ -28,5 +34,8 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.logo {
+  text-align: right;
 }
 </style>

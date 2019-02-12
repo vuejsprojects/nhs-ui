@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-navbar toggleable="md" type="dark" variant="info">
+  <div id="login">
+    <b-navbar toggleable="md" type="dark" class="nav-background">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand href="#">NavBar</b-navbar-brand>
@@ -39,7 +39,8 @@
     <b-container>
       <b-row align-h="center" class="mt-5">
         <b-col cols="5">
-          <b-card class="text-center">
+          <b-card class="p-3">
+            <h3 class="mb-4">Login</h3>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
               <b-form-group
                 id="exampleInputGroup1"
@@ -54,7 +55,11 @@
                   placeholder="Enter email"
                 ></b-form-input>
               </b-form-group>
-              <b-form-group id="exampleInputGroup2" label="Your Password:" label-for="exampleInput2">
+              <b-form-group
+                id="exampleInputGroup2"
+                label="Your Password:"
+                label-for="exampleInput2"
+              >
                 <b-form-input
                   id="exampleInput2"
                   type="password"
@@ -68,8 +73,15 @@
                   <b-form-checkbox value="me">Remember me</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
-              <b-button type="submit" variant="primary">Submit</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <b-button type="submit" variant="primary">Submit</b-button>&nbsp;
+                  <b-button type="reset" variant="danger">Reset</b-button>
+                </div>
+                <div>
+                  <a href="#">Forgot password</a>
+                </div>
+              </div>
             </b-form>
           </b-card>
         </b-col>
@@ -113,4 +125,14 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Cantarell:400i");
+
+#login {
+  background: #eef1f4;
+  font-family: "Cantarell", sans-serif;
+  text-align: left;
+}
+.nav-background {
+  background: #353535;
+}
 </style>

@@ -27,10 +27,14 @@ export default {
       for(let k in state.fieldValues) {
         names.push(k)
       }
+      // or const names = Object.keys(state.fieldValues)
       // removing free search
       const filtered = names.filter(n => n !== free_search);
       console.log("filtered field values:" + filtered);
       return filtered;
+    },
+    fieldNumber: (state, getters) => {
+      return Object.keys(getters.fieldNames).length
     },
     freeSearchName: state => free_search
   },

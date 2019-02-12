@@ -1,15 +1,38 @@
 <template>
   <div>
-    <h3>Enter some free text for a wild search</h3>
-    <SearchField v-bind:optname="$store.getters.freeSearchName" 
-              v-bind:oid="$store.getters.freeSearchName">
-    </SearchField>
-    <h3>Or enter a search criteria in the fields you are intersted in</h3>
-    <div v-for="opt in $store.getters.fieldNames"
-      v-bind:key="opt.id">
-      <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
-    </div>
-    
+    <b-form @submit="onSubmit">
+    <b-container fluid>
+      <b-row align-h="center" class="mt-5">
+        <b-col cols="12">
+          <b-card class="p-3">
+
+            <SearchField
+              v-bind:optname="$store.getters.freeSearchName"
+              v-bind:oid="$store.getters.freeSearchName"
+            ></SearchField>
+<!--
+            <hr>
+            <h3>Or Search by tarriff field</h3>
+            <div v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
+              <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
+            </div>
+            -->
+          </b-card>
+        </b-col>
+      </b-row>
+      <hr>
+      <p>Search by tarriff field</p>
+      <b-row>
+        <b-col cols="3" v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
+            <SearchField
+              v-bind:optname="opt"
+              v-bind:oid="opt"
+            ></SearchField>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-button type="submit" variant="info">Submit</b-button>
+    </b-form>
   </div>
 </template>
 
@@ -22,6 +45,19 @@ export default {
   },
   components: {
     SearchField
+  },
+  data () {
+    return {
+      form: {
+        fieldValues: this.$store.state.fieldValues
+      }
+    }
+  },
+  methods: {
+    onSubmit (evt) {
+      evt.preventDefault();
+      alert(JSON.stringify(this.form));
+    }
   }
 };
 </script>

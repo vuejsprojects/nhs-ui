@@ -1,11 +1,14 @@
 <template>
   <div>
-    <label class="lfield" :for=oid>{{optname}}</label>
-    <input class="ifield" type="text" :id="oid" 
-        placeholder="Enter the search criteria"
-        v-bind:value="fieldvalue"
-        v-on:input="setFieldValue"
-    />
+    <label class="lfield" :for="oid">{{optname}}</label>
+    <input
+      class="ifield"
+      type="text"
+      :id="oid"
+      placeholder="Enter the search criteria"
+      v-bind:value="fieldvalue"
+      v-on:input="setFieldValue"
+    >
   </div>
 </template>
 <script>
@@ -16,21 +19,20 @@ export default {
     optname: String
   },
   data: function() {
-    return {
-    };
+    return {};
   },
   computed: {
     fieldvalue() {
-      return this.$store.state.fieldValues[this.optname]
+      return this.$store.state.fieldValues[this.optname];
     }
   },
   methods: {
     setFieldValue(e) {
-      console.log("event: "+ e.target.id + " - " + e.target.value);
-      const payload ={
+      console.log("event: " + e.target.id + " - " + e.target.value);
+      const payload = {
         key: e.target.id,
         value: e.target.value
-      }
+      };
       this.$store.commit("setFieldValue", payload);
     }
   },
@@ -42,17 +44,18 @@ export default {
 <style scoped>
 .lfield {
   color: cadetblue;
-  display: block; 
+  /*display: block;*/
   width: 100px;
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
   background-color: lightblue;
 }
 
 .ifield {
   text-align: left;
-  width: 100%;
+  height: 12px;
+  width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
