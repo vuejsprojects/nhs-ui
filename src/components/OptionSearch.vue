@@ -20,7 +20,7 @@
           </b-card>
         </b-col>
       </b-row>
-      <hr>
+      <hr/>
       <p>Search by tarriff field</p>
       <b-row>
         <b-col cols="3" v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">

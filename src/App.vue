@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <div class="logo mt-3 mr-3">
-    <img alt="Vue logo" src="@/assets/nhs_logo.gif" />
+      <img alt="Vue logo" src="@/assets/nhs_logo.gif"/>
     </div>
     <div id="nav">
-      <router-link to="/">Login</router-link> |
-      <router-link to="/about">About</router-link> |
+      <router-link to="/">Login</router-link>|
+      <router-link to="/about">About</router-link>|
       <router-link to="/drug">Drug Search</router-link>
     </div>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 

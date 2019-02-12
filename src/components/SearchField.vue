@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="lfield" :for="oid">{{optname}}</label>
+    <label class="lfield" :for="oid">{{ optname }}</label>
     <input
       class="ifield"
       type="text"
@@ -8,7 +8,7 @@
       placeholder="Enter the search criteria"
       v-bind:value="fieldvalue"
       v-on:input="setFieldValue"
-    >
+    />
   </div>
 </template>
 <script>
