@@ -6,5 +6,8 @@ export default {
             console.log('field values:' + k + ": " +
                 state.fieldValues[k])
         };
+    },
+    setUserAuthorized(state, authorized) {
+        state.userAuthorized = authorized
     }
 };

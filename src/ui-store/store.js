@@ -19,7 +19,8 @@ export default {
       "Pack Size": "",
       unit: "",
       [free_search]: ""
-    }
+    },
+    userAuthorized: false
   },
   mutations,
   getters: {
