@@ -45,7 +45,7 @@ export default {
 .lfield {
   color: cadetblue;
   /*display: block;*/
-  width: 100px;
+  width: 10rem;
 }
 
 input[type="text"]:focus {

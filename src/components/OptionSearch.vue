@@ -21,13 +21,15 @@
                 </b-card>
               </b-col>
             </b-row>
-            <hr>
-            <p>Search by tarriff field</p>
+            <br>
+            <div class='fieldgroup'>
+            <p class="fieldsearchtitle">Search by tariff field</p>
             <b-row>
-              <b-col cols="3" v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
+              <b-col cols="6" v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
                 <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
               </b-col>
             </b-row>
+            </div>
           </b-container>
           <div class="d-flex p-2 justify-content-around">
             <b-button type="submit" variant="info">Run Search</b-button>
@@ -35,10 +37,10 @@
           </div>
         </b-form>
       </b-collapse>
-      <b-card-footer>
-        <b-btn block v-b-toggle.collapse1 variant="active" class="m-1">
-          <span class="when-opened">^</span>
-          <span class="when-closed">v</span>
+      <b-card-footer style="height: 10px;">
+        <b-btn style="height: 10px;" block v-b-toggle.collapse1 variant="active" class="m-1">
+          <span class="when-opened"></span>
+          <span class="when-closed"></span>
         </b-btn>
       </b-card-footer>
     </b-card>
@@ -120,5 +122,17 @@ export default {
 .collapsed > .when-opened,
 :not(.collapsed) > .when-closed {
   display: none;
+}
+
+.fieldgroup {
+  border-width: 1px;
+  border-style: solid;
+  border-color: lightgray;
+  border-radius: 5px;
+}
+
+.fieldsearchtitle {
+  text-align: center;
+  color: cadetblue;
 }
 </style>
