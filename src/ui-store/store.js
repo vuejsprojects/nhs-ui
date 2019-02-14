@@ -8,12 +8,15 @@ Vue.use(Vuex);
 export default {
   state: {
     fieldValues: {
-      name: "",
-      price: "",
+      Medicine: "",
+      Formulations: "",
+      "Special Container": "",
+      "Spec Cont Ind": "",
+      "Basic Price": "",
       category: "",
-      code: "",
+      "VMPP Snomed Code": "",
       period: "",
-      quantity: "",
+      "Pack Size": "",
       unit: "",
       [free_search]: ""
     }

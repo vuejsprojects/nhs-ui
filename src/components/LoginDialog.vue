@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -99,13 +101,32 @@ export default {
         password: "",
         checked: []
       },
-      show: true
+      show: true,
+      authorized: false
     };
   },
   methods: {
     onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      // evt.preventDefault();
+      // alert(JSON.stringify(this.form));
+      const path = "/api/login";
+      const headers = {
+        "Content-Type": "application/json",
+        // Authorization: "JWT fefege..."
+      };
+      axios
+        .post(path, this.form, { headers: headers })
+        .then(response => {
+          console.log("Got login response: " + response);
+          this.authorized = response.data.authorized;
+          if (this.authorized) {
+            this.$router.push("drug");
+          }
+        })
+        .catch(error => {
+          alert("Log in Error");
+          console.log("Something wrong: " + error);
+        });
     },
     onReset(evt) {
       evt.preventDefault();
