@@ -109,4 +109,8 @@ export default {
 .logo {
   text-align: right;
 }
+
+.nav-background {
+  background: #353535;
+}
 </style>

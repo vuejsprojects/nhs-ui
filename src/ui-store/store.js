@@ -2,10 +2,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import mutations from "@/ui-store/mutations";
 import { free_search } from "@/ui-store/store_config";
+import { authentication } from "@/ui-store/authentication";
 
 Vue.use(Vuex);
 
 export default {
+  modules: {
+    authentication
+  },
   state: {
     fieldValues: {
       Medicine: "",
