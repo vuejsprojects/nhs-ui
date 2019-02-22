@@ -11,7 +11,7 @@ export const authentication = {
     state: initialState,
     actions: {
         login({ dispatch, commit }, user) {
-            console.log('Action - login: ' + user.email + " commit func: " + commit)
+            //console.log('Action - login: ' + user.email + " commit func: " + commit)
             commit('loginRequest', { username: user.email });
             console.log('Action - login:  commited');
 
@@ -19,7 +19,7 @@ export const authentication = {
                 .then(
                     user => {
                         console.log("Commit login success");
-                        commit("setUserAuthorized", true);
+                        commit("setUserAuthorized", true, {root: true});
                         commit('loginSuccess', user);
                         router.push("drug");
                     },
@@ -40,14 +40,14 @@ export const authentication = {
                 .then(
                     user => {
                         console.log("Commit signup success");
-                        commit("setUserAuthorized", true);
+                        commit("setUserAuthorized", true, {root: true});
                         commit('loginSuccess', user);
                         router.push("drug");
                     },
                     error => {
                         console.log("Commit signup error");
                         commit('loginFailure', error);
-                        alert('Login failed')
+                        alert('signup failed')
                         // dispatch('alert/error', error, { root: true });
                     }
                 );

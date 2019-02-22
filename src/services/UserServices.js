@@ -36,6 +36,7 @@ function sendRequest(user, actionPath) {
         .catch(error => {
             // alert("Log in Error");
             console.log("Something wrong: " + error);
+            throw error;
         });
 }
 

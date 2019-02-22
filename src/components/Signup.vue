@@ -114,7 +114,7 @@ export default {
   methods: {
     onSubmit(evt) {
       console.log("Signup - for: " + this.form.email);
-      if (this.emailState && !this.pswState) {
+      if (this.emailState && this.pswState) {
         const user = {
           email: this.form.email,
           password: this.form.password

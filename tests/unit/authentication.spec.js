@@ -1,5 +1,11 @@
 import { authentication } from "@/ui-store/authentication.js"
 
+// full stotr testing
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+import store from "@/ui-store/store";
+
 // https://codeburst.io/a-pattern-for-mocking-and-unit-testing-vuex-actions-8f6672bdb255
 
 describe("Authentication", () => {
@@ -48,5 +54,18 @@ describe("Authentication", () => {
         authentication.actions.login({ dispatch, commit: mockCommit }, user)
     })
 
+    test("Full store", () => {
+        let testedStore = new Vuex.Store(store);
+        let setDataMock = jest.fn();
+        const form = {
+            email: "test@test.com",
+            password: "test",
+            checked: []
+          }
 
+        testedStore.dispatch("authentication/login", form)
+        .then(() => expect(
+            store.state.userAuthorized
+        ).toBe(true))
+    })
 })
