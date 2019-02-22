@@ -25,6 +25,18 @@
           <b-form-checkbox value="me">Remember me</b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
+      <div>
+        <b-form-checkbox
+          id="captcha"
+          v-model="captchaStatus"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >I'm not a robot (http://www.captcha.net/)</b-form-checkbox>
+
+        <div>State:
+          <strong>{{ captchaStatus }}</strong>
+        </div>
+      </div>
       <div class="d-flex justify-content-between">
         <div>
           <b-button type="submit" variant="primary">Submit</b-button>&nbsp;
@@ -39,8 +51,6 @@
 </template>
 
 <script>
-import { userLogin } from "@/services/UserServices.js"
-import { authentication} from "@/ui-store/authentication"
 
 export default {
   name: "Signin",
@@ -51,20 +61,20 @@ export default {
         password: "",
         checked: []
       },
-      show: true
+      show: true,
+      captchaStatus: "not verified"
     };
   },
   methods: {
     onSubmit(evt) {
-      // userLogin.login(this.form)
-      console.log('Signin - login: ' + this.form.email)
-      this.$store.dispatch('authentication/loginAuth', this.form)
+      console.log("Signin - login: " + this.form.email);
+      this.$store.dispatch("authentication/login", this.form);
     },
     onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
       this.form.email = "";
-      this.form.password = ""
+      this.form.password = "";
       this.form.checked = [];
       /* Trick to reset/clear native browser form validation state */
       this.show = false;

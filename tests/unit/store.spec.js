@@ -44,6 +44,11 @@ describe("SearchOn.vue", () => {
     test('Tne number of field names shoule the same as the number of field valued', () => {
         expect(the_store.getters.fieldNames).toHaveLength(
             Object.keys(the_store.state.fieldValues).length - 1);
-        expect(the_store.getters.fieldNames).toContain('price');
+        expect(the_store.getters.fieldNames).toContain('Basic Price');
+    })
+
+    it("should set authorized flag", () => {
+        the_store.commit("setUserAuthorized", true);
+        expect(the_store.state.userAuthorized).toEqual(true)
     })
 })

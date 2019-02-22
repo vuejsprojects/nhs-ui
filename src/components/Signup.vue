@@ -1,6 +1,6 @@
 <template>
   <b-card class="p-3">
-    <h3 class="mb-4">Fill out the form to create your account. </h3>
+    <h3 class="mb-4">Fill out the form to create your account.</h3>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="exampleInputGroup1"
@@ -54,6 +54,19 @@
           placeholder="Enter same password"
         ></b-form-input>
       </b-form-group>
+      <div>
+        <b-form-checkbox
+          id="captcha"
+          v-model="captchaStatus"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >I'm not a robot (http://www.captcha.net/)</b-form-checkbox>
+
+        <div>
+          State:
+          <strong>{{ captchaStatus }}</strong>
+        </div>
+      </div>
       <div class="d-flex justify-content-between">
         <div>
           <b-button type="submit" variant="primary">Register</b-button>&nbsp;
@@ -65,8 +78,6 @@
 </template>
 
 <script>
-import { userLogin } from "@/services/UserServices.js";
-import { authentication } from "@/ui-store/authentication";
 
 export default {
   name: "Signin",
@@ -79,47 +90,36 @@ export default {
         password2: ""
       },
       show: true,
-      errEmail: false,
-      errPasswd: false
+      captchaStatus: "not verified"
     };
   },
   computed: {
     emailState() {
-      return this.form.email == this.form.email2
+      return this.form.email == this.form.email2;
     },
     emailNotSame() {
       if (!this.emailState) {
-        console.log("emailstate: "+ this.emailState)
-        return "Please make sure the two email adresses are identical";
+        return "Please make sure the two email addresses are identical";
       }
     },
-    validFeedbackEmail() {
-      return this.emailState ? "Thanks" : "";
-    },
     pswState() {
-      return this.form.password == this.form.password2
+      return this.form.password == this.form.password2;
     },
     passwordNotSame() {
       if (!this.pswState) {
-        return "Please make sure the two email adresses are identical";
+        return "Please make sure the two passwords are identical";
       }
-    },
-    validFeedbackPswd() {
-      return this.pswState ? "Thanks" : "";
     }
   },
   methods: {
     onSubmit(evt) {
-      // userLogin.login(this.form)
       console.log("Signup - for: " + this.form.email);
-      if (this.form.email != this.form.email2) {
-        this.errEmail = true;
-      }
-      if (this.form.password != this.form.password2) {
-        this.errPasswd = true;
-      }
-      if (!this.errPasswd && !this.errEmail) {
-        this.$store.dispatch("authentication/loginAuth", this.form);
+      if (this.emailState && !this.pswState) {
+        const user = {
+          email: this.form.email,
+          password: this.form.password
+        };
+        this.$store.dispatch("authentication/signup", user);
       }
     },
     onReset(evt) {

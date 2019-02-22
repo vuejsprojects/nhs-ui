@@ -41,13 +41,6 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <!--
-    <div id="nav">
-      <router-link to="/">Login</router-link>|
-      <router-link to="/about">About</router-link>|
-      <router-link to="/drug">Drug Search</router-link>
-    </div>
-    -->
     <router-view/>
   </div>
 </template>
@@ -64,20 +57,6 @@ export default {
       };
       this.$store.commit("setUserAuthorized", false);
       this.$router.push("/");
-      // axios
-      //   .post(path, this.form, { headers: headers })
-      //   .then(response => {
-      //     console.log("Got login response: " + response);
-      //     const authorized = response.data.authorized;
-      //     this.$store.commit("setUserAuthorized", authorized);
-      //     if (authorized) {
-      //       this.$router.push("drug");
-      //     }
-      //   })
-      //   .catch(error => {
-      //     alert("Log in Error");
-      //     console.log("Something wrong: " + error);
-      //   });
     }
   }
 };

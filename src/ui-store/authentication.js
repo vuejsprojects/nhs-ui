@@ -10,12 +10,12 @@ export const authentication = {
     namespaced: true,
     state: initialState,
     actions: {
-        loginAuth({ dispatch, commit }, form) {
-            console.log('Action - login: ' + form.email + " commit func: " + commit)
-            commit('loginRequest', { username: form.email });
+        login({ dispatch, commit }, user) {
+            console.log('Action - login: ' + user.email + " commit func: " + commit)
+            commit('loginRequest', { username: user.email });
             console.log('Action - login:  commited');
 
-            userLogin.loginUsr(form)
+            userLogin.login(user)
                 .then(
                     user => {
                         console.log("Commit login success");
@@ -25,6 +25,27 @@ export const authentication = {
                     },
                     error => {
                         console.log("Commit login error");
+                        commit('loginFailure', error);
+                        alert('Login failed')
+                        // dispatch('alert/error', error, { root: true });
+                    }
+                );
+        },
+        signup({ dispatch, commit }, user) {
+            console.log('Action - signup: ' + user.email + " commit func: " + commit)
+            commit('loginRequest', { username: user.email });
+            console.log('Action - signup:  commited');
+
+            userLogin.signup(user)
+                .then(
+                    user => {
+                        console.log("Commit signup success");
+                        commit("setUserAuthorized", true);
+                        commit('loginSuccess', user);
+                        router.push("drug");
+                    },
+                    error => {
+                        console.log("Commit signup error");
                         commit('loginFailure', error);
                         alert('Login failed')
                         // dispatch('alert/error', error, { root: true });
@@ -42,6 +63,7 @@ export const authentication = {
             state.user = user;
         },
         loginSuccess(state, user) {
+            console.log("loginSuccess");
             state.status = { loggedIn: true };
             state.user = user;
         },

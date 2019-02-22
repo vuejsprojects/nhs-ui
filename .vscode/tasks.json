@@ -1,0 +1,12 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run test on todel spec",
+            "type": "shell",
+            "command": "/home/pjmd/bin/node-v10.13.0-linux-x64/bin/node  /home/pjmd/js_workspace/VueProjects/nhs-ui/node_modules/.bin/jest --runInBand --no-cache tests/unit/todel.spec.js"
+        }
+    ]
+}

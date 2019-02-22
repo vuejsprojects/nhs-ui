@@ -8,6 +8,7 @@ export default {
         };
     },
     setUserAuthorized(state, authorized) {
+        console.log("setting setUserAuthorized: " + authorized)
         state.userAuthorized = authorized
     }
 };
