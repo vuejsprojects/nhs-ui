@@ -1,6 +1,7 @@
 <template>
   <b-card class="p-3">
     <h3 class="mb-4">Login</h3>
+    <p class="text-danger" v-if="alert.status.loggingError">{{alert.message}}</p>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="exampleInputGroup1" label="Email address:" label-for="exampleInput1">
         <b-form-input
@@ -64,6 +65,11 @@ export default {
       show: true,
       captchaStatus: "not verified"
     };
+  },
+  computed: {
+    alert() {
+      return this.$store.state.authentication
+    }
   },
   methods: {
     onSubmit(evt) {

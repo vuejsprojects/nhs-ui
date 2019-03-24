@@ -3,8 +3,8 @@ import router from '@/router'
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user
-    ? { status: { loggedIn: true }, user }
-    : { status: {}, user: null };
+    ? { status: { loggedIn: true }, user , message: null}
+    : { status: {}, user: null, message: null };
 
 export const authentication = {
     namespaced: true,
@@ -26,7 +26,7 @@ export const authentication = {
                     error => {
                         console.log("Commit login error");
                         commit('loginFailure', error);
-                        alert('Login failed')
+                        //alert('Login failed')
                         // dispatch('alert/error', error, { root: true });
                     }
                 );
@@ -47,13 +47,14 @@ export const authentication = {
                     error => {
                         console.log("Commit signup error");
                         commit('loginFailure', error);
-                        alert('signup failed')
+                        // alert('signup failed')
                         // dispatch('alert/error', error, { root: true });
                     }
                 );
         },
         logout({ commit }) {
-            userService.logout();
+            console.log('authentication.js - logout');
+            userLogin.logout();
             commit('logout');
         }
     },
@@ -61,19 +62,23 @@ export const authentication = {
         loginRequest(state, user) {
             state.status = { loggingIn: true };
             state.user = user;
+            state.message = null;
         },
         loginSuccess(state, user) {
             console.log("loginSuccess");
             state.status = { loggedIn: true };
             state.user = user;
+            state.message = null;
         },
-        loginFailure(state) {
-            state.status = {};
+        loginFailure(state, error) {
+            state.status = {loggingError: true};
             state.user = null;
+            state.message = error;
         },
         logout(state) {
             state.status = {};
             state.user = null;
+            state.message = null;
         }
     }
 }

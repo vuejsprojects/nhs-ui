@@ -1,6 +1,7 @@
 <template>
   <b-card class="p-3">
     <h3 class="mb-4">Fill out the form to create your account.</h3>
+    <p class="text-danger" v-if="alert.status.loggingError">{{alert.message}}</p>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="exampleInputGroup1"
@@ -109,6 +110,9 @@ export default {
       if (!this.pswState) {
         return "Please make sure the two passwords are identical";
       }
+    },
+    alert() {
+      return this.$store.state.authentication
     }
   },
   methods: {
