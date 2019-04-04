@@ -51,6 +51,7 @@
 
 <script>
 import SearchField from "@/components/SearchField.vue";
+import { authHeader } from "@/services/HeaderService.js"
 import axios from "axios";
 
 export default {
@@ -80,6 +81,10 @@ export default {
         "Content-Type": "application/json"
         // Authorization: "JWT fefege..."
       };
+      if (authHeader()) {
+        headers.Authorization = authHeader().Authorization
+      }
+      console.log("search headers: ", headers);
       axios
         .post(path, this.form, { headers: headers })
         .then(response => {
