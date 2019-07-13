@@ -74,7 +74,14 @@ export default {
   methods: {
     onSubmit(evt) {
       console.log("Signin - login: " + this.form.email);
-      this.$store.dispatch("authentication/login", this.form);
+      console.log("Signin - process.env = ", process.env);
+      // if(process.env.VUE_APP_SKIP_AXIOS) {
+      //   console.log("Signin - login: DEV Mode");
+      //   this.$router.push("drug");
+      // }
+      // else {
+        this.$store.dispatch("authentication/login", this.form);
+      //}
     },
     onReset(evt) {
       evt.preventDefault();

@@ -4,32 +4,34 @@
       <b-collapse visible id="collapse1" class="mt-2">
         <b-form @submit="onSubmit">
           <b-container fluid>
-            <b-row align-h="center" class="mt-5">
-              <b-col cols="12">
-                <b-card class="p-3">
-                  <SearchField
-                    v-bind:optname="$store.getters.freeSearchName"
-                    v-bind:oid="$store.getters.freeSearchName"
-                  ></SearchField>
-                  <!--
-            <hr>
-            <h3>Or Search by tarriff field</h3>
-            <div v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
-              <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
-            </div>
-                  -->
-                </b-card>
-              </b-col>
-            </b-row>
-            <br>
-            <div class='fieldgroup'>
-            <p class="fieldsearchtitle">Search by tariff field</p>
-            <b-row>
-              <b-col cols="6" v-for="(opt, index) in $store.getters.fieldNames" v-bind:key="index">
-                <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
-              </b-col>
-            </b-row>
-            </div>
+            <b-tabs>
+              <b-tab title="Free Search">
+                <b-row align-h="center" class="mt-5">
+                  <b-col cols="12">
+                    <b-card class="p-3">
+                      <SearchField
+                        v-bind:optname="$store.getters.freeSearchName"
+                        v-bind:oid="$store.getters.freeSearchName"
+                      ></SearchField>
+                    </b-card>
+                  </b-col>
+                </b-row>
+                <br>
+              </b-tab>
+              <b-tab title="Search By Tariff Field">
+                <div class="fieldgroup">
+                  <b-row>
+                    <b-col
+                      cols="6"
+                      v-for="(opt, index) in $store.getters.fieldNames"
+                      v-bind:key="index"
+                    >
+                      <SearchField v-bind:optname="opt" v-bind:oid="opt"></SearchField>
+                    </b-col>
+                  </b-row>
+                </div>
+              </b-tab>
+            </b-tabs>
           </b-container>
           <div class="d-flex p-2 justify-content-around">
             <b-button type="submit" variant="info">Run Search</b-button>
@@ -51,7 +53,7 @@
 
 <script>
 import SearchField from "@/components/SearchField.vue";
-import { authHeader } from "@/services/HeaderService.js"
+import { authHeader } from "@/services/HeaderService.js";
 import axios from "axios";
 
 export default {
@@ -82,9 +84,10 @@ export default {
         // Authorization: "JWT fefege..."
       };
       if (authHeader()) {
-        headers.Authorization = authHeader().Authorization
+        headers.Authorization = authHeader().Authorization;
       }
       console.log("search headers: ", headers);
+      // This POST MUST be done thru https otherwis anybody can intercept the JWT token
       axios
         .post(path, this.form, { headers: headers })
         .then(response => {
