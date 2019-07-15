@@ -7,6 +7,12 @@ export default {
                 state.fieldValues[k])
         };
     },
+    resetFieldValue(state) {
+        console.log('Reset all fileds');
+        for (let k in state.fieldValues) {
+                state.fieldValues[k] = ''
+        };
+    },
     setUserAuthorized(state, authorized) {
         console.log("setting setUserAuthorized: " + authorized)
         state.userAuthorized = authorized

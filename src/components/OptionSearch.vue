@@ -2,9 +2,9 @@
   <div>
     <b-card no-body class="mb-1">
       <b-collapse visible id="collapse1" class="mt-2">
-        <b-form @submit="onSubmit">
+        <b-form @submit="onSubmit"  @reset="onReset">
           <b-container fluid>
-            <b-tabs>
+            <b-tabs v-model="form.tabIndex">
               <b-tab title="Free Search">
                 <b-row align-h="center" class="mt-5">
                   <b-col cols="12">
@@ -67,14 +67,20 @@ export default {
   data() {
     return {
       form: {
-        fieldValues: this.$store.state.fieldValues
+        fieldValues: this.$store.state.fieldValues,
+        tabIndex: 1
       },
       solr_docs: [],
       sortable_doc_fields: [],
-      solr_excluded_fields: ["_version_", "_ts", "id", "ns"]
+      solr_excluded_fields: ["_version_", "_ts", "id", "ns"],
+      tabIndex: 1
     };
   },
   methods: {
+    onReset(evt) {
+      console.log("Reset the all the search fields")
+      this.$store.commit('resetFieldValue')
+    },
     onSubmit(evt) {
       // evt.preventDefault();
       // alert(JSON.stringify(this.form));
@@ -87,6 +93,7 @@ export default {
         headers.Authorization = authHeader().Authorization;
       }
       console.log("search headers: ", headers);
+      console.log("form: ", this.form);
       // This POST MUST be done thru https otherwis anybody can intercept the JWT token
       axios
         .post(path, this.form, { headers: headers })
