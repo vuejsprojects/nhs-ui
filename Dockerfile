@@ -8,8 +8,12 @@ FROM python:3.6-slim
 #
 # See Makfile
 #
+# it is recommended to use the reverse dns notaion for a label: com.pjmd.git_version
+#
 ARG GIT_VERSION=unspecified
 LABEL git_version=$GIT_VERSION
+
+RUN echo ">" $GIT_VERSION "<"
 
 # Set the working directory to /app
 WORKDIR /app
