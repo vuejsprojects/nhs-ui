@@ -25,10 +25,10 @@ function sendRequest(user, actionPath) {
         .catch(error => {
             // with axios it seems like if status code is not 200 an exception is thrown
             // alert("Log in Error");
-            console.log("User could get in: " + error);
+            console.log("User could not get in: " + error);
             console.log('reponse status: ', error.response.status)
             // if (error.response.status === 401) {
-            logout();
+            // logout();
             //     location.reload(true);
             // }
             const error_msg = (error.response.data && error.response.data.message) || error.response.statusText;
@@ -64,7 +64,7 @@ function sendDummyRequest(user, actionPath) {
     .catch(error => {
                     // with axios it seems like if status code is not 200 an exception is thrown
                     // alert("Log in Error");
-                    console.log("User could get in: " + error);
+                    console.log("User could not get in: " + error);
                 });
 }
 

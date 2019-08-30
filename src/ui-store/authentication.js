@@ -24,6 +24,8 @@ export const authentication = {
                         router.push("drug");
                     },
                     error => {
+                        console.log("remove user from local storage to log user out");
+                        userLogin.logout();
                         console.log("Commit login error");
                         commit('loginFailure', error);
                         //alert('Login failed')
