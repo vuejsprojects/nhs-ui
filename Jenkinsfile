@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'node:13-alpine'
-            // args '-u 0:0 -p 3000:3000 -p 5000:5000' 
             args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
         }
     }
@@ -12,6 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'npm install'
                 sh 'npm run build'
             }
         }
