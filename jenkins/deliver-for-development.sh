@@ -1,4 +1,4 @@
 set -x
-npm start &
+npm run serve &
 sleep 1
 echo $! > .pidfile
