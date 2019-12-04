@@ -31,7 +31,12 @@ pipeline {
             }
         }
         stage('Build docker image') {
-            sh 'make'
+            when {
+                branch 'br_bootstrap'
+            }
+            steps {
+                sh 'make'
+            }
         }
         stage('Deploy for production') {
             when {
