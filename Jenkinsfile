@@ -6,10 +6,10 @@ pipeline {
 //        }
 //    }
     agent {
-    // Equivalent to "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./tmp/
+    // Equivalent to "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./image-build/
         dockerfile {
             filename 'Dockerfile-jenkins'
-            // dir 'tmp'
+            dir 'image-build'
             args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
         }
     }
