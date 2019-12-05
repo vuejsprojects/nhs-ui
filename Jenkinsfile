@@ -1,7 +1,15 @@
 pipeline {
+//    agent {
+//        docker {
+//            image 'node:13-alpine'
+//            args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
+//        }
+//    }
     agent {
-        docker {
-            image 'node:13-alpine'
+    // Equivalent to "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./tmp/
+        dockerfile {
+            filename 'Dockerfile-jenkins'
+            dir 'tmp'
             args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
         }
     }
