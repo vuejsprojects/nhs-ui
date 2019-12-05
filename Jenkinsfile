@@ -10,7 +10,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile-jenkins'
             dir 'image-build'
-            args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
+            args ' -e "HOME=/var/lib/jenkins/workspace" -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/jenkins/workspace:/var/lib/jenkins/workspace -p 3000:3000 -p 5000:5000' 
         }
     }
     environment {
