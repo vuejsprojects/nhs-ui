@@ -4,7 +4,7 @@ USER root
 
 # install make and git 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential
+    && apt-get install -y --no-install-recommends build-essential \
     && apt-get install -y --no-install-recommends git
 
 # Install the latest Docker CE binaries and add user `jenkins` to the docker group
