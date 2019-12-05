@@ -25,8 +25,8 @@ RUN apt-get update && \
       stable" && \
    apt-get update && \
    apt-get -y install docker-ce && \
-   && groupadd -g ${gid} ${group} \
-   && useradd -u ${uid} -g ${gid}
+   groupadd -g ${gid} ${group}  && \
+   useradd -u ${uid} -g ${gid} && \
    usermod -aG docker jenkins
 
 # drop back to the regular jenkins user - good practice
