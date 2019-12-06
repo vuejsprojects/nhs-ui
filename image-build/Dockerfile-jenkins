@@ -5,6 +5,9 @@ ARG user=jenkins
 ARG group=jenkins
 ARG uid=124
 ARG gid=129
+ARG docker_gid=128
+
+RUN addgroup docker --gid=${docker_gid};
 
 # install make and git 
 RUN apt-get update \
