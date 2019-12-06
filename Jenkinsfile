@@ -45,7 +45,15 @@ pipeline {
             }
             steps {
                 sh 'echo I am $(id)'
+                // The docker image is built from the docker file and specifies
+                // the proper group name and id for jenkins and docker
+                // To re-evaluate jenkins group and switch to its secondary group docker
+                // we use a hack: newgrp docker
+                sh 'newgrp docker'
+                sh 'echo now I am $(id)'
                 sh 'make'
+                // get back to primary jenkins group
+                sh 'newgrp jenkins'
             }
         }
         stage('Deploy for production') {
