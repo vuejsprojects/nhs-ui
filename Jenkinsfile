@@ -44,6 +44,7 @@ pipeline {
                 branch 'br_bootstrap'
             }
             steps {
+                sh 'echo I am $(id)'
                 sh 'make'
             }
         }
