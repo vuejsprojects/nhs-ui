@@ -49,9 +49,7 @@ pipeline {
                 // the proper group name and id for jenkins and docker
                 // To re-evaluate jenkins group and switch to its secondary group docker
                 // we use a hack: newgrp docker
-                sh 'newgrp docker'
-                sh 'echo now I am $(id)'
-                sh 'newgrp docker && make && newgrp jenkins'
+                sh 'newgrp docker && echo now I am $(id) && make && newgrp jenkins'
                 // get back to primary jenkins group
                 sh 'newgrp jenkins'
             }
