@@ -51,7 +51,7 @@ pipeline {
                 // we use a hack: newgrp docker
                 sh 'newgrp docker'
                 sh 'echo now I am $(id)'
-                sh 'make'
+                sh 'newgrp docker && make && newgrp jenkins'
                 // get back to primary jenkins group
                 sh 'newgrp jenkins'
             }
