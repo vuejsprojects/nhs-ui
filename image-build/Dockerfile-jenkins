@@ -30,7 +30,7 @@ RUN apt-get update && \
    apt-get -y install docker-ce && \
    groupadd -g ${gid} ${group}  && \
    useradd -M -u ${uid} -g ${gid} ${user} && \
-   usermod -aG docker jenkins
+   usermod -aG docker jenkins 
 
 # drop back to the regular jenkins user - good practice
-# USER jenkins
+USER jenkins
