@@ -1,8 +1,8 @@
 pipeline {
     // to allow freestype job to copy artifacts
-    options {
-        copyArtifactPermission('nhs-ui-to-artifactory');
-    }
+    //options {
+    //    copyArtifactPermission('nhs-ui-to-artifactory');
+    //}
 
 //    agent {
 //        docker {
@@ -70,6 +70,11 @@ pipeline {
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
         }
     }
 }
