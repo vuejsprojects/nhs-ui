@@ -1,4 +1,9 @@
 pipeline {
+    // to allow freestype job to copy artifacts
+    options {
+        copyArtifactPermission('nhs-ui-to-artifactory');
+    }
+
 //    agent {
 //        docker {
 //            image 'node:13-alpine'
