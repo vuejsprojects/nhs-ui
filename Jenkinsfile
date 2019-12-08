@@ -1,5 +1,6 @@
+def folder = 'versionned_folder'
+
 pipeline {
-    def folder = 'versionned_folder'
 
     // to allow freestype job to copy artifacts
     //options {
