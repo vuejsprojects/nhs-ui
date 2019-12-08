@@ -92,5 +92,5 @@ pipeline {
     //     always {
     //         archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
     //     }
-    // }
+    }
 }
