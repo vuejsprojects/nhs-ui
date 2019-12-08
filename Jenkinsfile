@@ -70,7 +70,7 @@ pipeline {
             }
             steps {
                 script {
-                    zip_file = "nhs-ui-"+sh(returnStdout: true, script: 'git describe --tag')+".zip"
+                    zip_file = sh(returnStdout: true, script: 'echo "nhs-ui-$(git describe --tag).zip"')
                 }
                 sh "echo Zipping dist: ${zip_file}"
                 // zip zipFile: ${zip_file}, archive: true, dir: 'dist'
