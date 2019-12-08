@@ -69,12 +69,9 @@ pipeline {
                 branch 'br_bootstrap'
             }
             steps {
-                sh 'echo Zipping dist'
-                script {
-                    
-                }
-                zip zipFile: ${folder}, archive: true, dir: 'dist'
-                archiveArtifacts artifacts: ${folder}, fingerprint: true
+                sh 'echo Zipping dist|: ${folder}'
+                zip zipFile: 'some_folder', archive: true, dir: 'dist'
+                archiveArtifacts artifacts: 'some_folder', fingerprint: true
             }
         }
         stage('Deploy for production') {
