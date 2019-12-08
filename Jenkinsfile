@@ -30,40 +30,40 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'echo npm run test:unit'
-            }
-        }
-        stage('Deliver for development') {
-            when {
-                branch 'br_bootstrap'
-            }
-            steps {
-                sh './jenkins/deliver-for-development.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/kill.sh'
-            }
-        }
-        stage('Build docker image') {
-            when {
-                branch 'br_bootstrap'
-            }
-            steps {
-                sh 'echo I am $(id)'
-                // The docker image is built from the docker file and specifies
-                // the proper group name and id for jenkins and docker
-                // args -u jenkins istead of id:gid makes it possible to run
-                // docker with jenkins user belonging to group docker
-                sh 'make'
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         sh 'npm install'
+        //         sh 'npm run build'
+        //     }
+        // }
+        // stage('Test') {
+        //     steps {
+        //         sh 'echo npm run test:unit'
+        //     }
+        // }
+        // stage('Deliver for development') {
+        //     when {
+        //         branch 'br_bootstrap'
+        //     }
+        //     steps {
+        //         sh './jenkins/deliver-for-development.sh'
+        //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
+        //         sh './jenkins/kill.sh'
+        //     }
+        // }
+        // stage('Build docker image') {
+        //     when {
+        //         branch 'br_bootstrap'
+        //     }
+        //     steps {
+        //         sh 'echo I am $(id)'
+        //         // The docker image is built from the docker file and specifies
+        //         // the proper group name and id for jenkins and docker
+        //         // args -u jenkins istead of id:gid makes it possible to run
+        //         // docker with jenkins user belonging to group docker
+        //         sh 'make'
+        //     }
+        // }
         stage('Zip distribution build') {
             when {
                 branch 'br_bootstrap'
@@ -77,20 +77,20 @@ pipeline {
                 archiveArtifacts artifacts: ${zip_file}, fingerprint: true
             }
         }
-        stage('Deploy for production') {
-            when {
-                branch 'production'
-            }
-            steps {
-                sh './jenkins/scripts/deploy-for-production.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
-        }
-    }
+    //     stage('Deploy for production') {
+    //         when {
+    //             branch 'production'
+    //         }
+    //         steps {
+    //             sh './jenkins/scripts/deploy-for-production.sh'
+    //             input message: 'Finished using the web site? (Click "Proceed" to continue)'
+    //             sh './jenkins/scripts/kill.sh'
+    //         }
+    //     }
+    // }
+    // post {
+    //     always {
+    //         archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
+    //     }
+    // }
 }
