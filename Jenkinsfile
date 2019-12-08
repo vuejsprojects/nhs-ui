@@ -1,4 +1,6 @@
 pipeline {
+    def folder = 'versionned_folder'
+
     // to allow freestype job to copy artifacts
     //options {
     //    copyArtifactPermission('nhs-ui-to-artifactory');
@@ -68,9 +70,9 @@ pipeline {
             steps {
                 sh 'echo Zipping dist'
                 script {
-                    def folder = 'versionned_folder'
+                    
                 }
-                zip zipFile: folder, archive: true, dir: 'dist'
+                zip zipFile: ${folder}, archive: true, dir: 'dist'
                 archiveArtifacts artifacts: ${folder}, fingerprint: true
             }
         }
