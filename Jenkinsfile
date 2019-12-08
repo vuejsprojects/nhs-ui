@@ -67,9 +67,11 @@ pipeline {
             }
             steps {
                 sh 'echo Zipping dist'
-                def folder = 'versionned_folder'
-                zip ZipFile: folder, archive: true, dir: 'dist'
-                archiveArtifacts artifacts: folder, fingerprint: true
+                script {
+                    def folder = 'versionned_folder'
+                }
+                zip zipFile: folder, archive: true, dir: 'dist'
+                archiveArtifacts artifacts: ${folder}, fingerprint: true
             }
         }
         stage('Deploy for production') {
