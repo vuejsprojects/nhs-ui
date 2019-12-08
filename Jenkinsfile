@@ -61,6 +61,17 @@ pipeline {
                 sh 'make'
             }
         }
+        stage('Zip distribution build') {
+            when {
+                branch 'br_bootstrap'
+            }
+            steps {
+                sh 'echo Zipping dist'
+                def folder = 'versionned_folder'
+                zip ZipFile: folder, archive: true, dir: 'dist'
+                archiveArtifacts artifacts: folder, fingerprint: true
+            }
+        }
         stage('Deploy for production') {
             when {
                 branch 'production'
