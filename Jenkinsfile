@@ -1,4 +1,4 @@
-def folder = 'versionned_folder'
+def zip_file = 'nhs-ui-version.zip'
 
 pipeline {
 
@@ -69,9 +69,12 @@ pipeline {
                 branch 'br_bootstrap'
             }
             steps {
-                sh 'echo Zipping dist|: ${folder}'
-                zip zipFile: 'some_folder', archive: true, dir: 'dist'
-                archiveArtifacts artifacts: 'some_folder', fingerprint: true
+                script {
+                    zip_file = 'nhs-ui'+sh(returnStdout: true, script: 'git describe --tag')+'.zip'
+                }
+                sh 'echo Zipping dist|: ${zip_file}'
+                zip zipFile: ${zip_file}, archive: true, dir: 'dist'
+                archiveArtifacts artifacts: ${zip_file}, fingerprint: true
             }
         }
         stage('Deploy for production') {
