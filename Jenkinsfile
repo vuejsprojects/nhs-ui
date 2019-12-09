@@ -80,7 +80,7 @@ pipeline {
                 }
                 sh "echo Zipping dist: ${zip_file}"
                 zip zipFile: "${zip_file}", archive: true, dir: 'dist'
-                archiveArtifacts artifacts: "**/${zip_file}", fingerprint: true
+                archiveArtifacts artifacts: "*${zip_file}*", fingerprint: true
             }
         }
         stage('Deploy for production') {
