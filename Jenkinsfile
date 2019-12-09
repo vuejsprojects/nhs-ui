@@ -94,7 +94,7 @@ pipeline {
         }
     }
     post {
-        always {
+        success {
             deleteDir() /* clean up our workspace */
             // archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
         }
