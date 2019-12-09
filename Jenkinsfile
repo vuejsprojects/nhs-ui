@@ -76,11 +76,12 @@ pipeline {
             steps {
                 sh 'git fetch'
                 script {
-                    zip_file = sh(returnStdout: true, script: 'echo "nhs-ui-$(git describe --tag).zip"')
+                    // zip_file = sh(returnStdout: true, script: 'echo "nhs-ui-$(git describe --tag).zip"')
+                    zip_file = "stuff.zip"
                 }
                 sh "echo Zipping dist: ${zip_file}"
-                zip zipFile: "ui.zip", archive: true, dir: 'dist'
-                archiveArtifacts artifacts: "ui.zip", fingerprint: true
+                zip zipFile: "${zip_file}", archive: true, dir: 'dist'
+                archiveArtifacts artifacts: "${zip_file}", fingerprint: true
                 // script {
                 //     def uploadSpec = """{
                 //         "files": [
