@@ -82,20 +82,26 @@ pipeline {
                 archiveArtifacts artifacts: "${zip_file}", fingerprint: true
             }
         }
-    //     stage('Deploy for production') {
-    //         when {
-    //             branch 'production'
-    //         }
-    //         steps {
-    //             sh './jenkins/scripts/deploy-for-production.sh'
-    //             input message: 'Finished using the web site? (Click "Proceed" to continue)'
-    //             sh './jenkins/scripts/kill.sh'
-    //         }
-    //     }
-    // }
-    // post {
-    //     always {
-    //         archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
-    //     }
+        stage('Deploy for production') {
+            when {
+                branch 'production'
+            }
+            steps {
+                sh './jenkins/scripts/deploy-for-production.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+    }
+    post {
+        always {
+            deleteDir() /* clean up our workspace */
+            // archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
+        }
+        // failure {
+        //     mail to: 'team@example.com',
+        //         subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+        //         body: "Something is wrong with ${env.BUILD_URL}"
+        // }
     }
 }
