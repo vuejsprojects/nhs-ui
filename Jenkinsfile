@@ -30,7 +30,7 @@ pipeline {
         CI = 'true'
     }
     stages {
-        // stage('Clean up') { /* clean up our workspace. PB: just deleted git clone! */
+        // stage('Clean up') { /* clean up our workspace. PB: just deleted git clone!! */
         //     steps {
         //         step([$class: 'WsCleanup'])
         //     }
