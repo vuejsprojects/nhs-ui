@@ -35,12 +35,12 @@ pipeline {
                 step([$class: 'WsCleanup'])
             }
         }
-        // stage('Build') {
-        //     steps {
-        //         sh 'npm install'
-        //         sh 'npm run build'
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
         // stage('Test') {
         //     steps {
         //         sh 'echo npm run test:unit'
@@ -75,7 +75,7 @@ pipeline {
             }
             steps {
                 script {
-                    zip_file = sh(returnStdout: true, script: 'rm nhs-ui-*.zip && echo "nhs-ui-$(git describe --tag).zip"')
+                    zip_file = sh(returnStdout: true, script: 'echo "nhs-ui-$(git describe --tag).zip"')
                 }
                 sh "echo Zipping dist: ${zip_file}"
                 zip zipFile: "${zip_file}", archive: true, dir: 'dist'
