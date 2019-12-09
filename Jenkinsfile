@@ -76,7 +76,7 @@ pipeline {
             steps {
                 sh 'git fetch'
                 script {
-                    // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
+                    zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
                     // zip_file = "stuff.zip"
                 }
                 sh "echo Zipping dist: ${zip_file}"
