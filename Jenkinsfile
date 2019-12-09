@@ -30,11 +30,11 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Clean up') {
-            steps {
-                step([$class: 'WsCleanup'])
-            }
-        }
+        // stage('Clean up') { /* clean up our workspace. PB: just deleted git clone! */
+        //     steps {
+        //         step([$class: 'WsCleanup'])
+        //     }
+        // }
         stage('Build') {
             steps {
                 sh 'npm install'
