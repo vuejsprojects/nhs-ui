@@ -30,6 +30,9 @@ pipeline {
         CI = 'true'
     }
     stages {
+        stage('Clean up') {
+            step([$class: 'WsCleanup'])
+        }
         // stage('Build') {
         //     steps {
         //         sh 'npm install'
