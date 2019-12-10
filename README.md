@@ -99,4 +99,5 @@ I added to *launch.json* configuration: "program": "${file}"
 ## Project build
 See the Jenkinsfile.
 Webhook set up on the github repo menu setting webhook
-
+To trigger build one need to push something for the new release to be
+built base on a new commit.
