@@ -94,3 +94,9 @@ I added to *launch.json* configuration: "program": "${file}"
 1. Because it's a bit convoluted, it's better to separate actions, mutations from the store so they can be tested separately. The probleme is that the state must be injected (see mutations.spec.js and sore.spec.js)
 2. Export the store a simple object not a Vuex object otherwise problems will be looming.
 3. In main.js, use(Vuex) and in the Vue instance pass it a new Vuex(store plain object)
+
+
+## Project build
+See the Jenkinsfile.
+Webhook set up on the github repo menu setting webhook
+
