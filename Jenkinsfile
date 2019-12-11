@@ -42,13 +42,13 @@ pipeline {
                 sh 'echo Action of build: $param_action'
                 sh 'echo if release, release tag is : $param_tag'
                 script {
-                    if  ($x_github_event=="release" && $param_tag!=null) {
+                    if  (x_github_event=="release" && param_tag!=null) {
                         echo "Release - Checking out $param_tag is_release=$is_release"
                         git fetch
                         git checkout $param_tag
                     }
                     else {
-                        $is_release=false
+                        is_release=false
                         echo "Just a push, checking out latest. is_release=$is_release"
                     }
                 }
