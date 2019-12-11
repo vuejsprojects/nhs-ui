@@ -37,6 +37,9 @@ pipeline {
         // }
         stage('Build') {
             steps {
+                sh 'echo Type of build: $x_github_event'
+                sh 'echo Action of build: $param_action'
+                sh 'echo if release, release tag is : $param_tag'
                 sh 'npm install'
                 sh 'npm run build'
             }
