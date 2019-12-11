@@ -44,8 +44,8 @@ pipeline {
                 script {
                     if  (x_github_event=="release" && param_tag!=null) {
                         echo "Release - Checking out $param_tag is_release=$is_release"
-                        git fetch
-                        git checkout $param_tag
+                        sh 'git fetch'
+                        sh 'git checkout $param_tag'
                     }
                     else {
                         is_release=false
