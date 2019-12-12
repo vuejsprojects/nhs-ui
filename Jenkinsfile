@@ -38,6 +38,8 @@ pipeline {
     // a multibranch pipeline requires the configuration to be done in the Jenkins file.
     // Hence this "triggers section"
     // The variables values are based on what GitHub's post is made of.
+    // For these parameters to be set for the job, the build has to run once and therefore
+    // one has to run it manually then it can be triggered by the hook.
     //
     triggers {
         GenericTrigger(
@@ -58,8 +60,11 @@ pipeline {
         
         silentResponse: false,
         
-        regexpFilterText: '$repo',
-        regexpFilterExpression: 'vuejsprojects/' + BRANCH_NAME
+        // Optional Filter: if $repo == regex th job is triggered
+        // BRANCH_NAME I guess is a property define by Jenkins
+        //
+        // regexpFilterText: '$repo',
+        // regexpFilterExpression: 'vuejsprojects/' + BRANCH_NAME
         )
     }
 
