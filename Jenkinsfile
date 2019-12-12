@@ -179,7 +179,7 @@ pipeline {
                         'files': [
                             {
                             'pattern': ${zip_file},
-                            'target': 'Jenkins-Integration/dist/''
+                            'target': 'Jenkins-Integration/dist/'
                             }
                         ]
                     }"""
