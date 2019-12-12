@@ -163,7 +163,7 @@ pipeline {
                     // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
                     zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$param_tag.zip"')
                     rtSpec = sh(returnStdout: true, script: 
-                    'cat << EOF
+                    '''cat << EOF
                     {
                         "files": [
                             {
@@ -173,7 +173,7 @@ pipeline {
                         ]
                     }
                     EOF
-                    ')
+                    ''')
                 }
                 // zipping the distribution to archive it in jenkins/jobs/.../builds/<build_num>/archive
                 sh "echo Zipping dist: ${zip_file}"
