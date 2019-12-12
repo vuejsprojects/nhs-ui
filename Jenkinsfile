@@ -59,7 +59,7 @@ pipeline {
         silentResponse: false,
         
         regexpFilterText: '$repo',
-        regexpFilterExpression: 'vuejsprojects/' + REPO_NAME
+        regexpFilterExpression: 'vuejsprojects/' + BRANCH_NAME
         )
     }
 
