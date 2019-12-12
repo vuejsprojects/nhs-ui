@@ -59,7 +59,7 @@ pipeline {
         silentResponse: false,
         
         regexpFilterText: '$ref',
-        regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+        regexpFilterExpression: 'refs/heads/' + BRANCH_NAME,
         regexpFilterText: '$repo',
         regexpFilterExpression: 'vuejsprojects/' + REPO_NAME
         )
