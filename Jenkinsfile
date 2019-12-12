@@ -77,17 +77,17 @@ pipeline {
                 sh 'echo Type of build: $x_github_event'
                 sh 'echo Action of build: $param_action'
                 sh 'echo if release, release tag is : $param_tag'
-                script {
-                    if  (x_github_event=="release" && param_tag!=null) {
-                        echo "Release - Checking out $param_tag is_release=$is_release"
-                        sh 'git fetch'
-                        sh 'git checkout $param_tag'
-                    }
-                    else {
-                        is_release=false
-                        echo "Just a push, checking out latest. is_release=$is_release"
-                    }
-                }
+                // script {
+                //     if  (x_github_event=="release" && param_tag!=null) {
+                //         echo "Release - Checking out $param_tag is_release=$is_release"
+                //         sh 'git fetch'
+                //         sh 'git checkout $param_tag'
+                //     }
+                //     else {
+                //         is_release=false
+                //         echo "Just a push, checking out latest. is_release=$is_release"
+                //     }
+                // }
                 sh 'npm install'
                 sh 'npm run build'
             }
