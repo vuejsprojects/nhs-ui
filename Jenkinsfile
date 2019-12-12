@@ -16,7 +16,12 @@ pipeline {
 //    }
     // https://jenkins.io/doc/book/pipeline/syntax/#agent
     agent {
-    // Equivalent to "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./image-build/
+        // Building an image on the fly: I need a image base on node that can run npm,
+        // docker command (docker in docker) as well as git: see Dokcker-jenkins file.
+        // This why we mount /var/run/docker.sock
+        // 
+        // dockerfile { ... } is equivalent to 
+        // "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./image-build/
         dockerfile {
             filename 'Dockerfile-jenkins'
             dir 'image-build'
@@ -39,8 +44,10 @@ pipeline {
     // Hence this "triggers section"
     // The variables values are based on what GitHub's post is made of.
     // For these parameters to be set for the job, the build has to run once and therefore
-    // one has to run it manually then it can be triggered by the hook.
-    // Once run just go to View Configuration uder the job just run to see the changes.
+    // one has to run it manually then it can be triggered by the hook (see Settings
+    // on the GiHub repo).
+    // Once the job run, one can check its job configuration in View Configuration under 
+    // the job (in my case branch name).
     //
     // ref: https://wiki.jenkins.io/display/JENKINS/Generic+Webhook+Trigger+Plugin
     //
@@ -71,9 +78,10 @@ pipeline {
         
         silentResponse: false,
         
-        // Optional Filter: if $repo == regex th job is triggered
-        // BRANCH_NAME I guess is a property define by Jenkins
-        //
+        // Optional Filter: 
+        // Goal: if $repo == regex the job is triggered
+        // BRANCH_NAME I guess is a property defined by Jenkins
+        // Obviously in my case BRANCH_NAME should be TAG_NAME
         // regexpFilterText: '$repo',
         // regexpFilterExpression: 'vuejsprojects/' + BRANCH_NAME
         )
@@ -83,7 +91,9 @@ pipeline {
         CI = 'true'
     }
     stages {
-        // stage('Clean up') { /* clean up our workspace. PB: just deleted git clone!! */
+        // The following stage cleans up the workspace. 
+        // Not ood for me because it happens after git clone and just deletes all the files!!
+        // stage('Clean up') { /*  */
         //     steps {
         //         step([$class: 'WsCleanup'])
         //     }
@@ -128,11 +138,14 @@ pipeline {
         //         branch 'br_bootstrap'
         //     }
         //     steps {
-        //         sh 'echo I am $(id)'
+        //         sh 'echo I am $(id)' /* id is the unix user id */
         //         // The docker image is built from the docker file and specifies
         //         // the proper group name and id for jenkins and docker
-        //         // args -u jenkins istead of id:gid makes it possible to run
-        //         // docker with jenkins user belonging to group docker
+        //         // One should soecify args -u jenkins instead of id:gid 
+        //         // to make it possible to run docker with jenkins user belonging
+        //         // to the proper group docker. Otherwise even though the user was
+        //         // configured with docker group, docker doesn't show as one of the
+        //         // user's group.
         //         sh 'make'
         //     }
         // }
@@ -142,23 +155,34 @@ pipeline {
             }
             steps {
                 sh 'git fetch'
+                // building the zipfile name based on the tag we checkout
+                // to be absolutely correct we should use the variable
+                // $param_tag  instead of "git describe --tag" because somebody
+                // may have created a release just in the meantime  
                 script {
-                    zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
+                    // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
+                    zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$param_tag.zip"')
                 }
+                // zipping the distribution to archive it in jenkins/jobs/.../builds/<build_num>/archive
                 sh "echo Zipping dist: ${zip_file}"
                 zip zipFile: "${zip_file}", archive: true, dir: 'dist'
                 archiveArtifacts artifacts: "${zip_file}", fingerprint: true
-                // script {
-                //     def uploadSpec = """{
-                //         "files": [
-                //             {
-                //             "pattern": "*${zip_file}*",
-                //             "target": "Jenkins-Integration"
-                //             }
-                //         ]
-                //     }"""
-                //     server.upload spec: uploadSpec, buildInfo: buildInfo
-                // }
+                // Job nhs-ui-to-artifactory is allowed to copy archived atrtifacts from nhs-ui
+                // nhs-ui-to-artifactory is automatically triggered after a successful nhs-ui build and
+                // will then store the artifact in the artifactory but
+                // we can also store in the artifactory direcly from this job as specified below:
+                // ref: https://www.jfrog.com/confluence/display/RTF/Declarative+Pipeline+Syntax
+                rtUpload (
+                    serverId: 'artifactory-oss-6.12.2',
+                    spec: '''{
+                        "files": [
+                            {
+                            "pattern": "${zip_file}",
+                            "target": "Jenkins-Integration/dist/nhs-ui/"
+                            }
+                        ]
+                    }'''
+                )
             }
         }
         stage('Deploy for production') {
@@ -172,13 +196,13 @@ pipeline {
             }
         }
     }
+    // When the build is done, delete the workspace if successfull othewise send an email
     post {
         success {
             deleteDir() /* clean up our workspace */
-            // archiveArtifacts artifacts: 'dist/**/*.*', onlyIfSuccessful: true
         }
         // failure {
-        //     mail to: 'team@example.com',
+        //     mail to: 'alert@ptech.com',
         //         subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
         //         body: "Something is wrong with ${env.BUILD_URL}"
         // }
