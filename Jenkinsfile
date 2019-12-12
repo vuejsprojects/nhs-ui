@@ -177,8 +177,8 @@ pipeline {
                     spec: '''{
                         "files": [
                             {
-                            "pattern": "${zip_file}",
-                            "target": "Jenkins-Integration/dist/nhs-ui/"
+                            "pattern": "Dockerfile",
+                            "target": "Jenkins-Integration/dist/"
                             }
                         ]
                     }'''
