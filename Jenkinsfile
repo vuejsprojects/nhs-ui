@@ -162,9 +162,19 @@ pipeline {
                 script {
                     // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
                     zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$param_tag.zip"')
+                    rtSpec = = sh(returnStdout: true, script: 'printf "{
+                        \"files\": [
+                            {
+                            \"pattern\":${zip_file}
+                            \"target\": \"Jenkins-Integration/dist/\"
+                            }
+                        ]
+                    }"')
                 }
                 // zipping the distribution to archive it in jenkins/jobs/.../builds/<build_num>/archive
                 sh "echo Zipping dist: ${zip_file}"
+                sh "echo rtSpec = ${rtSpec}"
+                
                 zip zipFile: "${zip_file}", archive: true, dir: 'dist'
                 archiveArtifacts artifacts: "${zip_file}", fingerprint: true
                 // Job nhs-ui-to-artifactory is allowed to copy archived atrtifacts from nhs-ui
@@ -174,14 +184,7 @@ pipeline {
                 // ref: https://www.jfrog.com/confluence/display/RTF/Declarative+Pipeline+Syntax
                 rtUpload (
                     serverId: 'artifactory-oss-6.12.2',
-                    spec: '''{
-                        "files": [
-                            {
-                            "pattern": "${zip_file}",
-                            "target": "Jenkins-Integration/dist/"
-                            }
-                        ]
-                    }'''
+                    spec: "${rtSpec}"
                 )
             }
         }
