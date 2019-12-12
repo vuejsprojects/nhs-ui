@@ -176,10 +176,10 @@ pipeline {
                 rtUpload (
                     serverId: 'artifactory-oss-6.12.2',
                     spec: """{
-                        'files': [
+                        "files": [
                             {
-                            'pattern': ${zip_file},
-                            'target': 'Jenkins-Integration/dist/'
+                            "pattern": ${zip_file},
+                            "target": "Jenkins-Integration/dist/"
                             }
                         ]
                     }"""
