@@ -177,7 +177,7 @@ pipeline {
                     spec: '''{
                         "files": [
                             {
-                            "pattern": "Dockerfile",
+                            "pattern": zip_file,
                             "target": "Jenkins-Integration/dist/"
                             }
                         ]
