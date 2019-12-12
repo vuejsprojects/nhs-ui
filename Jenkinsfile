@@ -162,14 +162,14 @@ pipeline {
                 script {
                     // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
                     zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$param_tag.zip"')
-                    rtSpec = sh(returnStdout: true, script: 'printf "{
-                        \"files\": [
+                    rtSpec = sh(returnStdout: true, script: "printf '''{
+                        "files": [
                             {
-                            \"pattern\":${zip_file}
-                            \"target\": \"Jenkins-Integration/dist/\"
+                            "pattern":${zip_file}
+                            "target": "Jenkins-Integration/dist/"
                             }
                         ]
-                    }"')
+                    }'''")
                 }
                 // zipping the distribution to archive it in jenkins/jobs/.../builds/<build_num>/archive
                 sh "echo Zipping dist: ${zip_file}"
