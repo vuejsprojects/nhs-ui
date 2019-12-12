@@ -40,6 +40,9 @@ pipeline {
     // The variables values are based on what GitHub's post is made of.
     // For these parameters to be set for the job, the build has to run once and therefore
     // one has to run it manually then it can be triggered by the hook.
+    // Once run just go to View Configuration uder the job just run to see the changes.
+    //
+    // ref: https://wiki.jenkins.io/display/JENKINS/Generic+Webhook+Trigger+Plugin
     //
     triggers {
         GenericTrigger(
@@ -49,6 +52,14 @@ pipeline {
         [key: 'param_action', value: '$.action'],
         [key: 'param_tag', value: '$.release.tag_name'],
         [key: 'param_branch', value: '$.release.target_commitish']
+        ],
+
+        genericHeaderVariables: [
+        [key: 'x-github-event', regexpFilter: '']
+        ],
+
+        genericRequestVariables: [
+        [key: 'token', regexpFilter: '']
         ],
         
         causeString: 'Triggered on $param_action',
@@ -82,17 +93,17 @@ pipeline {
                 sh 'echo Type of build: $x_github_event'
                 sh 'echo Action of build: $param_action'
                 sh 'echo if release, release tag is : $param_tag'
-                // script {
-                //     if  (x_github_event=="release" && param_tag!=null) {
-                //         echo "Release - Checking out $param_tag is_release=$is_release"
-                //         sh 'git fetch'
-                //         sh 'git checkout $param_tag'
-                //     }
-                //     else {
-                //         is_release=false
-                //         echo "Just a push, checking out latest. is_release=$is_release"
-                //     }
-                // }
+                script {
+                    if  (x_github_event=="release" && param_tag!=null) {
+                        echo "Release - Checking out $param_tag is_release=$is_release"
+                        sh 'git fetch'
+                        sh 'git checkout $param_tag'
+                    }
+                    else {
+                        is_release=false
+                        echo "Just a push, checking out latest. is_release=$is_release"
+                    }
+                }
                 sh 'npm install'
                 sh 'npm run build'
             }
