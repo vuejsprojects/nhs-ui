@@ -27,6 +27,44 @@ pipeline {
             -p 3000:3000 -p 5000:5000' 
         }
     }
+    //
+    // The GitHub webhook plugin doesn't trigger jobs for a Release event albeit it works
+    // fine for a Push event.
+    // Gotchas: the GitHub webhook url must end with /
+    // As a conquence I decided to use the Generic Webhook plugin which works fine with
+    // any GitHub event.
+    // Gotchas: the Generic Webhook Trigger plugin url MUST end with ?token=<user defined token>
+    // While configuring a simple pipeline is "easy" and can be done wih the Jenkins UI
+    // a multibranch pipeline requires the configuration to be done in the Jenkins file.
+    // Hence this "triggers section"
+    // The variables values are based on what GitHub's post is made of.
+    //
+    triggers {
+        GenericTrigger(
+        genericVariables: [
+        [key: 'ref', value: '$.ref'],
+        [key: 'param_repo', value: '$.repository.fullname'],
+        [key: 'param_action', value: '$.action'],
+        [key: 'param_tag', value: '$.release.tag_name'],
+        [key: 'param_branch', value: '$.release.target_commitish']
+        ],
+        
+        causeString: 'Triggered on $param_action',
+        
+        token: 'wtf_nhs_ui',
+        
+        printContributedVariables: true,
+        printPostContent: true,
+        
+        silentResponse: false,
+        
+        regexpFilterText: '$ref',
+        regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+        regexpFilterText: '$repo',
+        regexpFilterExpression: 'vuejsprojects/' + REPO_NAME
+        )
+    }
+
     environment {
         CI = 'true'
     }
