@@ -175,6 +175,9 @@ pipeline {
                 // It stores the artifact in the artifactory but
                 // we can also store in the artifactory direcly from this job as specified below:
                 // ref: https://www.jfrog.com/confluence/display/RTF/Declarative+Pipeline+Syntax
+                // Note:
+                // variables have to be ""ted in order to be evaluated. Here spec is """ instead of
+                // ''' so $zip_file is evaluated
                 rtUpload (
                     serverId: 'artifactory-oss-6.12.2',
                     spec: """{
