@@ -123,54 +123,56 @@ pipeline {
         //         sh 'echo npm run test:unit'
         //     }
         // }
-        // stage('Deliver for development') {
-        //     when {
-        //         branch 'br_bootstrap'
-        //     }
-        //     steps {
-        //         sh './jenkins/deliver-for-development.sh'
-        //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
-        //         sh './jenkins/kill.sh'
-        //     }
-        // }
-        // stage('Build docker image') {
-        //     when {
-        //         branch 'br_bootstrap'
-        //     }
-        //     steps {
-        //         sh 'echo I am $(id)' /* id is the unix user id */
-        //         // The docker image is built from the docker file and specifies
-        //         // the proper group name and id for jenkins and docker
-        //         // One should soecify args -u jenkins instead of id:gid 
-        //         // to make it possible to run docker with jenkins user belonging
-        //         // to the proper group docker. Otherwise even though the user was
-        //         // configured with docker group, docker doesn't show as one of the
-        //         // user's group.
-        //         sh 'make'
-        //     }
-        // }
+        stage('Deliver for development') {
+            when {
+                branch 'br_bootstrap'
+            }
+            steps {
+                sh './jenkins/deliver-for-development.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/kill.sh'
+            }
+        }
+        stage('Build docker image') {
+            when {
+                branch 'br_bootstrap'
+            }
+            steps {
+                sh 'echo I am $(id)' /* id is the unix user id. It should be "jenkins"*/
+                // The docker image is built from the docker file. It creates a 
+                // jenkins user and group based on the id/gid on the host and specifies
+                // the proper group name and id for jenkins and docker.
+                // When launching the container one should soecify s args 
+                // "-u jenkins" instead of "-u id:gid" to run docker container as
+                // user jenkins groups "jenkins and docker". 
+                // Otherwise even though the user was configured with docker group, 
+                // docker doesn't show as one of the user jenkins's group.
+                sh 'make'
+            }
+        }
         stage('Zip distribution build') {
             when {
                 branch 'br_bootstrap'
             }
             steps {
-                sh 'git fetch'
-                // building the zipfile name based on the tag we checkout
-                // to be absolutely correct we should use the variable
+                sh 'git fetch' /* unnecessary as we now use variable param_tag to get the version */
+                // Building the zipfile name based on the tag we checked out
+                // To be absolutely correct we should use the variable
                 // $param_tag  instead of "git describe --tag" because somebody
                 // may have created a release just in the meantime  
                 script {
                     // zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$(git describe --tag).zip"')
                     zip_file = sh(returnStdout: true, script: 'printf "nhs-ui-$param_tag.zip"')
                 }
-                // zipping the distribution to archive it in jenkins/jobs/.../builds/<build_num>/archive
+                // zipping the distribution and archive it in jenkins/jobs/.../builds/<build_num>/archive
                 sh "echo Zipping dist: ${zip_file}"
 
                 zip zipFile: "${zip_file}", archive: true, dir: 'dist'
                 archiveArtifacts artifacts: "${zip_file}", fingerprint: true
-                // Job nhs-ui-to-artifactory is allowed to copy archived atrtifacts from nhs-ui
-                // nhs-ui-to-artifactory is automatically triggered after a successful nhs-ui build and
-                // will then store the artifact in the artifactory but
+
+                // Job nhs-ui-to-artifactory is allowed to copy archived atrtifacts from nhs-ui.
+                // nhs-ui-to-artifactory is automatically triggered after a successful nhs-ui build.
+                // It stores the artifact in the artifactory but
                 // we can also store in the artifactory direcly from this job as specified below:
                 // ref: https://www.jfrog.com/confluence/display/RTF/Declarative+Pipeline+Syntax
                 rtUpload (
@@ -179,7 +181,7 @@ pipeline {
                         "files": [
                             {
                             "pattern": "${zip_file}",
-                            "target": "Jenkins-Integration/dist/"
+                            "target": "Jenkins-Integration/dist/nhs-ui/"
                             }
                         ]
                     }"""
