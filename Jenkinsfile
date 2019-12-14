@@ -21,9 +21,10 @@ pipeline {
         // This why we mount /var/run/docker.sock
         // 
         // dockerfile { ... } is equivalent to 
-        // "docker build -f Dockerfile-jenkins --build-arg version=1.0.2 ./image-build/
+        // "docker build -f Dockerfile-jenkins --build-arg demo_used_at_docker_build_time=12345 ./image-build/
         dockerfile {
             filename 'Dockerfile-jenkins'
+            additionalBuildArgs "--build-arg demo_used_at_docker_build_time=12345"
             dir 'image-build'
             args ' -u jenkins \
             -e "HOME=/var/lib/jenkins/workspace" \
